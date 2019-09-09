@@ -1,27 +1,27 @@
 package com.example.designpattern.singleton;
 
 /**
- * 线程不安全，会产生多个实例，不可用
+ * 线程安全
  * @date 2019年08月23日21:48:33
  * */
 public class DangerousSingleton {
     private static DangerousSingleton singleton;
+
 	private DangerousSingleton() {}
 
     public static DangerousSingleton getInstance() {
-        if (singleton == null) {
+       if (singleton == null) {
             synchronized (DangerousSingleton.class) {
                 singleton = new DangerousSingleton();
             }
         }
+        //singleton = new DangerousSingleton();
         //验证是否是同一个实例
-        System.out.println(" context hashCode:"+singleton.hashCode());
         return singleton;
     }
 
 
 
-    //测试数据是否安全
     public Integer getCount() {
         return count;
     }
@@ -30,5 +30,17 @@ public class DangerousSingleton {
         this.count = count;
     }
 
+    public void work(){
+	    plusplus();
+	   // mecy();
+    }
+    private   void plusplus(){
+	    this.count++;
+    }
+
+    private  void mecy(){
+	    this.count--;
+    }
+    //测试数据是否安全,如果真的只有一个实例,那么count就是只有一个内存地址
     private Integer count=0;
 }
